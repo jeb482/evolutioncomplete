@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  */
 public class MainGame extends JFrame {
 	public MainGame() {
-		add(new Board());
+		add(new BoardView());
 		setSize(500, 500);
 		
 		// Don't let this resize. Pack fits to child node
@@ -25,9 +25,6 @@ public class MainGame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
-	
-	
-	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
