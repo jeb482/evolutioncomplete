@@ -1,17 +1,19 @@
 package EvolutionGame;
-import java.awt.Color;
+import util.Vector2;
 
 
 public class Player {
 	public float x;
 	public float y;
+	private int health;
 	private Board parent;
-//	public Vector2 forward = 
+	public Vector2 dir = new Vector2(); 
 	
 	public Player(float x, float y, Board parent) {
 		this.x = x;
 		this.y = y;
 		this.parent = parent;
+		this.health = 10;
 	}
 	
 	public void onFrame() {

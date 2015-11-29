@@ -34,9 +34,6 @@ public class BoardView extends JPanel implements Runnable{
 		setPreferredSize(new Dimension(PIXEL_HEIGHT, PIXEL_HEIGHT));
 		setDoubleBuffered(true);
 		
-		
-		
-		
 		// Make a thread
 		boardThread = new Thread(this);
 		boardThread.start();

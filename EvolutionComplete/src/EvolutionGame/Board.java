@@ -31,6 +31,7 @@ public class Board {
 	public void onFrame() {
 		for (Player p : players) {
 			p.onFrame();
+			
 		}
 		
 		for (Projectile p : projectiles) {
