@@ -2,6 +2,8 @@ package EvolutionGame;
 
 import java.util.ArrayList;
 
+import EvolutionGame.player.Player;
+
 public class Board {
 	public final float REAL_WIDTH = 2.0f;
 	public final float REAL_HEIGHT = 2.0f;	
@@ -9,8 +11,6 @@ public class Board {
 	private boolean humanPlayer = false;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-	
-	
 	
 	
 	public Board() {
@@ -38,4 +38,6 @@ public class Board {
 			p.onFrame();
 		}
 	}
+	
+
 }
