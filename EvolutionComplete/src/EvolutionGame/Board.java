@@ -3,6 +3,9 @@ package EvolutionGame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import EvolutionGame.player.HumanPlayer;
 import EvolutionGame.player.Player;
@@ -15,9 +18,14 @@ public class Board implements KeyListener {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	
+	private Lock projectileLock;
+	
+	
 	
 	public Board() {
 		// Create Players
+		projectileLock = new ReentrantLock();
+		
 		if (humanPlayer) {
 			players.add(new HumanPlayer(-0.75f, 0, this));
 		} else {
@@ -28,7 +36,8 @@ public class Board implements KeyListener {
 	}
 
 	public ArrayList<Player> getPlayers() {
-		return this.players;
+			return this.players;
+		
 	} 
 	
 	public ArrayList<Projectile> getProjectiles() {
@@ -37,12 +46,55 @@ public class Board implements KeyListener {
 	
 	public void onFrame() {
 		for (Player p : players) {
-			p.onFrame();
+			p.onFrame();	
+		}
+
+		ArrayList<Projectile> deadPs = new ArrayList<Projectile>(); 
+		projectileLock.lock();
+		try {
+			for (Projectile p : projectiles) {			
+				p.onFrame();
 			
+				if (p.pos.x < -2 || p.pos.y< -2 || p.pos.x > 2 || p.pos.y > 2) {
+					deadPs.add(p);
+					System.out.println(p.pos + " " + projectiles.size());
+				}
+			}
+		} finally {
+			projectileLock.unlock();
 		}
 		
-		for (Projectile p : projectiles) {
-			p.onFrame();
+		for (Projectile p : deadPs) {
+			projectileLock.lock();
+			try {
+				projectiles.remove(p);
+			} finally {
+				projectileLock.unlock();
+			}
+		}
+	}
+	
+	
+	/**
+	 * Thread safe addition of projectile
+	 * 
+	 * @param p
+	 */
+	public void addProjectile(Projectile p) {
+		projectileLock.lock();
+		try {
+			projectiles.add(p);
+		} finally {
+			projectileLock.unlock();
+		}
+	}
+	
+	public void removeProjectile(Projectile p) {
+		projectileLock.lock();
+		try {
+			projectiles.remove(p);
+		} finally {
+			projectileLock.unlock();
 		}
 	}
 	
@@ -71,7 +123,7 @@ public class Board implements KeyListener {
 				human.turnDir = -1;
 				break;
 			case KeyEvent.VK_SPACE:
-				System.out.println("Fire");
+				human.fire();
 				break;
 			default: 
 				//System.out.println("A key has been pressed");

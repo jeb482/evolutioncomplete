@@ -88,6 +88,16 @@ public class BoardView extends JPanel implements Runnable {
 			//System.out.println(p.getPixelX());
 		}
 		
+		
+		for (Projectile p : board.getProjectiles()) {
+			Point2i center = toPixel(p.pos);
+			int r = pixelDistance(p.radius);
+			Point2i dir = pixelVector(p.dir, r);
+
+			g.fillOval(center.x-r, center.y-r, 2*r, 2*r);
+			g.setColor(Color.GRAY);
+		}
+		
 	}
 	
 	public void run() {

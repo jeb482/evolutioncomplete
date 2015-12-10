@@ -1,23 +1,32 @@
 package EvolutionGame;
 
+import javax_.vecmath.Point2d;
+import javax_.vecmath.Vector2d;
+
 import EvolutionGame.player.Player;
-import util.Vector2;
 
 public class Projectile {
-	int x;
-	int y;
-	final Vector2 direction;
+	Point2d pos;
+	final Vector2d dir;
+	final Vector2d velocity;
+	final double radius = 0.01;
+	
 	private Board parent;
 	Player owner;
 
 	public Projectile(Player owner) {
 		this.owner = owner;
-		this.direction = new Vector2(owner.dir);
-		this.x = owner.getPixelX();
-		this.y = owner.getPixelY();
+		this.dir = new Vector2d(owner.dir);
+		
+		this.pos = new Point2d(dir);
+		pos.scale(radius);
+		pos.add(owner.pos);
+		
+		velocity = new Vector2d(dir);
+		velocity.scale(0.08);
 	}
 	
 	public void onFrame() {
-		
+		this.pos.add(velocity);
 	}
 }

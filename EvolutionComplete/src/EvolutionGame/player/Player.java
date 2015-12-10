@@ -1,9 +1,9 @@
 package EvolutionGame.player;
 import javax_.vecmath.Point2d;
 import javax_.vecmath.Vector2d;
-
 import util.Vectors;
 import EvolutionGame.Board;
+import EvolutionGame.Projectile;
 
 
 public class Player {
@@ -17,15 +17,21 @@ public class Player {
 	
 	public int turnDir = 0;  // positive for anticlockwise
 	public int moveDir = 0;  // forward positive, backward negative
-	public boolean missileReady = false;
-	public boolean missileArmed = false;
-	
+	public boolean missileReady = true;
+
 	public Player(double x, double y, Board parent) {
 		pos.x = x;
 		pos.y = y;
-		parent = parent;
+		this.parent = parent;
 		health = 10;
 		dir = new Vector2d(1,0);
+	}
+	
+	public void fire() {
+		if (this.missileReady) {
+			Projectile p = new Projectile(this);
+			parent.addProjectile(p);
+		}
 	}
 	
 	public void onFrame() {
