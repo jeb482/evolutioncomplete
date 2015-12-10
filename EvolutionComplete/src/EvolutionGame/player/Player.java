@@ -1,34 +1,46 @@
 package EvolutionGame.player;
+import javax_.vecmath.Point2d;
+import javax_.vecmath.Vector2d;
+
+import util.Vectors;
 import EvolutionGame.Board;
-import util.Vector2;
 
 
 public class Player {
-	public float x;
-	public float y;
-	private int health;
-	private Board parent;
-	public Vector2 dir = new Vector2(); 
+	public Point2d pos = new Point2d();
+	public Vector2d dir = new Vector2d(); 
+
 	
-	public Player(float x, float y, Board parent) {
-		this.x = x;
-		this.y = y;
-		this.parent = parent;
-		this.health = 10;
+	public float radius = 1.0f/20;
+	public int health;
+	private Board parent;
+	
+	public int turnDir = 0;  // positive for anticlockwise
+	public int moveDir = 0;  // forward positive, backward negative
+	public boolean missileReady = false;
+	public boolean missileArmed = false;
+	
+	public Player(double x, double y, Board parent) {
+		pos.x = x;
+		pos.y = y;
+		parent = parent;
+		health = 10;
+		dir = new Vector2d(1,0);
 	}
 	
 	public void onFrame() {
-		x += .005;
-		y += .005;
-	}
-	
-	public int getPixelX() {
-		// TODO: Using a temporary value
-		return (int) ((0.5f*x+1)*250);
-	}
-	
-	public int getPixelY() {
-		// TODO: Using a temporary value
-		return (int) ((0.5f*y+1)*250);
+		if (turnDir > 0) {
+			Vectors.rotate(dir,-0.15);
+		} else if (turnDir < 0) {
+			Vectors.rotate(dir, 0.15);
+		}
+		
+		if (moveDir > 0) {
+			pos.x += dir.x/50;
+			pos.y += dir.y/50;
+		} else if (moveDir < 0) {
+			pos.x -= dir.x/50;
+			pos.y -= dir.y/50;
+		}
 	}
 }

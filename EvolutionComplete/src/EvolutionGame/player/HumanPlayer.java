@@ -10,8 +10,9 @@ public class HumanPlayer extends Player{
 	
 	@Override
 	public void onFrame() {
-		
 		super.onFrame();
+		
+		
 	}
 
 }
