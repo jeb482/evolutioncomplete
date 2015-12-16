@@ -42,11 +42,11 @@ public class Player {
 		}
 		
 		if (moveDir > 0) {
-			pos.x += dir.x/50;
-			pos.y += dir.y/50;
+			pos.x += dir.x/30;
+			pos.y += dir.y/30;
 		} else if (moveDir < 0) {
-			pos.x -= dir.x/50;
-			pos.y -= dir.y/50;
+			pos.x -= dir.x/30;
+			pos.y -= dir.y/30;
 		}
 	}
 }

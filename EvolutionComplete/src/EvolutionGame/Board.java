@@ -3,10 +3,10 @@ package EvolutionGame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import EvolutionGame.player.ComputerPlayer;
 import EvolutionGame.player.HumanPlayer;
 import EvolutionGame.player.Player;
 
@@ -31,7 +31,7 @@ public class Board implements KeyListener {
 		} else {
 			players.add(new Player(-0.75f, 0, this));
 		}
-		players.add(new Player( 0.75f, 0, this));
+		players.add(new ComputerPlayer( 0.75f, 0, this));
 	
 	}
 

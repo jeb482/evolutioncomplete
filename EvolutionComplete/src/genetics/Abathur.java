@@ -82,7 +82,10 @@ public class Abathur {
 			
 			// Save
 			System.out.println("Archiving genetic code.");
+			
+		
 		}	
+		
 		
 		System.out.println("Evolution complete.");
 	}
@@ -115,7 +118,7 @@ public class Abathur {
 		String[] filenames = d.list(new StrainXmlFilter());
 		Strain[] population = new Strain[filenames.length];
 		for (int i = 0; i < population.length; i++) {
-			population[i] = Parser.loadStrain(filenames[i]);
+			population[i] = Parser.loadStrain(Paths.get(dir.toString(), (filenames[i])));
 		}
 		return population;
 	}

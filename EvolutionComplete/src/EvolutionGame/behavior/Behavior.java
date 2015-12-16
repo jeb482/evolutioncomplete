@@ -1,7 +1,8 @@
-package EvolutionGame;
+package EvolutionGame.behavior;
 
 import EvolutionGame.percept.Percept;
 import EvolutionGame.response.Response;
+
 
 public class Behavior {
 	Percept p;
