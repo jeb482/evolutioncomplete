@@ -32,12 +32,25 @@ public class Board implements KeyListener {
 			players.add(new Player(-0.75f, 0, this));
 		}
 		players.add(new ComputerPlayer( 0.75f, 0, this));
+	}
 	
+	/**
+	 * Returns the first player in the player list that is not the input player.
+	 * A lot of assumptions, eh?
+	 * 
+	 * @param a the player
+	 * @return the enemy
+	 */
+	public Player getEnemy(Player a) {
+		for (Player b : players) {
+			if (b != a)
+				return b;
+		}
+		return null;
 	}
 
 	public ArrayList<Player> getPlayers() {
-			return this.players;
-		
+		return this.players;
 	} 
 	
 	public ArrayList<Projectile> getProjectiles() {
@@ -57,7 +70,14 @@ public class Board implements KeyListener {
 			
 				if (p.pos.x < -2 || p.pos.y< -2 || p.pos.x > 2 || p.pos.y > 2) {
 					deadPs.add(p);
-					System.out.println(p.pos + " " + projectiles.size());
+					//System.out.println(p.pos + " " + projectiles.size());
+				} else {
+					for (Player player : this.players) {
+						if (p.pos.distance(player.pos) < p.radius + player.radius && p.owner != player) {
+							deadPs.add(p);
+							player.health -= 1;
+						}
+					}
 				}
 			}
 		} finally {
@@ -100,8 +120,7 @@ public class Board implements KeyListener {
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//System.out.println("A key has been typed");
-		// Pass
+		return;
 	}
 
 
@@ -125,9 +144,8 @@ public class Board implements KeyListener {
 			case KeyEvent.VK_SPACE:
 				human.fire();
 				break;
-			default: 
-				//System.out.println("A key has been pressed");
-		
+			default:
+				return;
 			}
 		}
 	}
@@ -163,7 +181,7 @@ public class Board implements KeyListener {
 				System.out.println("Fire released");
 				break;
 			default: 
-				//System.out.println("A key has been pressed");
+				return;
 			}		
 		}
 	}

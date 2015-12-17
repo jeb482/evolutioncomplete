@@ -53,8 +53,8 @@ public class BoardView extends JPanel implements Runnable {
 	}
 	
 	public Point2i toPixel(Tuple2d p) {
-		return new Point2i((int) ((0.5*p.x+1)*250),
-		                   (int) ((0.5f*p.y+1)*250));		 
+		return new Point2i((int) ((p.x+1)*250),
+		                   (int) ((p.y+1)*250));		 
 	}
 	
 	public int pixelDistance(double l) {
@@ -85,8 +85,10 @@ public class BoardView extends JPanel implements Runnable {
 			
 			
 			g.drawLine(center.x, center.y, center.x+dir.x, center.y+dir.y);
+			g.drawString("Player " + (i+1) + " " + p.health + " hp", 20, 20 + 20*i);
 			//System.out.println(p.getPixelX());
 		}
+		
 		
 		
 		for (Projectile p : board.getProjectiles()) {
@@ -111,6 +113,7 @@ public class BoardView extends JPanel implements Runnable {
 			
 			elapsedTime = System.currentTimeMillis() - previousTime;
 			sleepTime = PERIOD - elapsedTime; // TODO: Scary
+			
 			
 			if (sleepTime < 0) sleepTime = 2;
 			

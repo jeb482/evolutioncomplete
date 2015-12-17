@@ -5,9 +5,7 @@ import javax_.vecmath.Vector2d;
 
 import EvolutionGame.player.Player;
 
-public class Projectile {
-	Point2d pos;
-	final Vector2d dir;
+public class Projectile extends Actor {
 	final Vector2d velocity;
 	final double radius = 0.01;
 	
@@ -23,7 +21,7 @@ public class Projectile {
 		pos.add(owner.pos);
 		
 		velocity = new Vector2d(dir);
-		velocity.scale(0.08);
+		velocity.scale(0.04);
 	}
 	
 	public void onFrame() {
